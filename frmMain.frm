@@ -9,10 +9,21 @@ Begin VB.Form frmMain
    ClientLeft      =   48
    ClientTop       =   504
    ClientWidth     =   7800
+   Icon            =   "frmMain.frx":0000
    LinkTopic       =   "Form1"
    ScaleHeight     =   4752
    ScaleWidth      =   7800
    StartUpPosition =   2  'CenterScreen
+   Begin VB.Timer timHand 
+      Interval        =   1000
+      Left            =   2460
+      Top             =   120
+   End
+   Begin VB.Timer timStopWatch 
+      Interval        =   1000
+      Left            =   3300
+      Top             =   120
+   End
    Begin VB.CommandButton cmdEdit 
       Caption         =   "&Edit"
       BeginProperty Font 
@@ -26,7 +37,8 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   252
       Left            =   1140
-      TabIndex        =   28
+      TabIndex        =   7
+      TabStop         =   0   'False
       ToolTipText     =   "Edit selected time sheet entry..."
       Top             =   2400
       Width           =   972
@@ -44,7 +56,8 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   252
       Left            =   120
-      TabIndex        =   27
+      TabIndex        =   6
+      TabStop         =   0   'False
       ToolTipText     =   "New time sheet entry..."
       Top             =   2400
       Width           =   972
@@ -53,7 +66,7 @@ Begin VB.Form frmMain
       Align           =   2  'Align Bottom
       Height          =   192
       Left            =   0
-      TabIndex        =   22
+      TabIndex        =   29
       Top             =   4560
       Width           =   7800
       _ExtentX        =   13758
@@ -78,7 +91,7 @@ Begin VB.Form frmMain
             AutoSize        =   2
             Object.Width           =   1270
             MinWidth        =   1270
-            TextSave        =   "1:43 PM"
+            TextSave        =   "11:54 PM"
             Key             =   "Time"
          EndProperty
       EndProperty
@@ -86,7 +99,8 @@ Begin VB.Form frmMain
    Begin MSDataGridLib.DataGrid dgdGrid 
       Height          =   1812
       Left            =   120
-      TabIndex        =   20
+      TabIndex        =   16
+      TabStop         =   0   'False
       Top             =   2700
       Width           =   7632
       _ExtentX        =   13462
@@ -151,7 +165,7 @@ Begin VB.Form frmMain
       EndProperty
    End
    Begin VB.Frame fraEntry 
-      Caption         =   "Enter Time Sheet Information..."
+      Caption         =   "Enter TimeKeeper Information..."
       BeginProperty Font 
          Name            =   "MS Sans Serif"
          Size            =   7.8
@@ -161,14 +175,16 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
+      ForeColor       =   &H00800000&
       Height          =   2052
       Left            =   2340
-      TabIndex        =   13
+      TabIndex        =   23
       Top             =   600
       Width           =   5412
       Begin VB.CommandButton cmdDelete 
          Cancel          =   -1  'True
          Caption         =   "&Delete"
+         CausesValidation=   0   'False
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   7.8
@@ -180,13 +196,14 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   252
          Left            =   3480
-         TabIndex        =   31
+         TabIndex        =   14
          ToolTipText     =   "Delete this entry..."
          Top             =   1698
          Width           =   852
       End
       Begin VB.CommandButton cmdCancel 
          Caption         =   "Cancel"
+         CausesValidation=   0   'False
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   7.8
@@ -198,7 +215,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   252
          Left            =   4440
-         TabIndex        =   29
+         TabIndex        =   15
          ToolTipText     =   "Cancel edit session..."
          Top             =   1698
          Width           =   852
@@ -207,7 +224,7 @@ Begin VB.Form frmMain
          DataField       =   "DepartmentID"
          Height          =   288
          Left            =   1260
-         TabIndex        =   23
+         TabIndex        =   8
          ToolTipText     =   "Department against which this time should be ""charged""..."
          Top             =   240
          Width           =   4032
@@ -238,7 +255,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   252
          Left            =   2580
-         TabIndex        =   21
+         TabIndex        =   13
          ToolTipText     =   "Update database with current entry..."
          Top             =   1698
          Width           =   852
@@ -266,7 +283,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   288
          Left            =   1260
-         TabIndex        =   19
+         TabIndex        =   12
          Text            =   "txtHours"
          ToolTipText     =   "Hours spent on this activity..."
          Top             =   1680
@@ -276,7 +293,7 @@ Begin VB.Form frmMain
          DataField       =   "ProductID"
          Height          =   288
          Left            =   1260
-         TabIndex        =   24
+         TabIndex        =   9
          ToolTipText     =   "Product against which this time should be ""charged""..."
          Top             =   600
          Width           =   4032
@@ -298,7 +315,7 @@ Begin VB.Form frmMain
          DataField       =   "ProjectID"
          Height          =   288
          Left            =   1260
-         TabIndex        =   25
+         TabIndex        =   10
          ToolTipText     =   "Project against which this time should be ""charged""..."
          Top             =   960
          Width           =   4032
@@ -320,7 +337,7 @@ Begin VB.Form frmMain
          DataField       =   "FunctionID"
          Height          =   288
          Left            =   1260
-         TabIndex        =   26
+         TabIndex        =   11
          ToolTipText     =   "Categorize time spent by these functions..."
          Top             =   1320
          Width           =   4032
@@ -354,7 +371,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00800000&
          Height          =   192
          Left            =   588
-         TabIndex        =   18
+         TabIndex        =   28
          Top             =   1728
          Width           =   552
       End
@@ -374,7 +391,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00800000&
          Height          =   192
          Left            =   384
-         TabIndex        =   17
+         TabIndex        =   27
          Top             =   1368
          Width           =   756
       End
@@ -394,7 +411,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00800000&
          Height          =   192
          Left            =   492
-         TabIndex        =   16
+         TabIndex        =   26
          Top             =   1008
          Width           =   648
       End
@@ -414,7 +431,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00800000&
          Height          =   192
          Left            =   444
-         TabIndex        =   15
+         TabIndex        =   25
          Top             =   648
          Width           =   696
       End
@@ -434,22 +451,10 @@ Begin VB.Form frmMain
          ForeColor       =   &H00800000&
          Height          =   192
          Left            =   120
-         TabIndex        =   14
+         TabIndex        =   24
          Top             =   288
          Width           =   1020
       End
-   End
-   Begin MSComCtl2.Animation Animation1 
-      Height          =   492
-      Left            =   3060
-      TabIndex        =   12
-      Top             =   60
-      Width           =   552
-      _ExtentX        =   974
-      _ExtentY        =   868
-      _Version        =   393216
-      FullWidth       =   46
-      FullHeight      =   41
    End
    Begin VB.Frame fraHours 
       Caption         =   "Hours Worked"
@@ -465,12 +470,21 @@ Begin VB.Form frmMain
       ForeColor       =   &H00000080&
       Height          =   1752
       Left            =   120
-      TabIndex        =   2
+      TabIndex        =   17
       Top             =   600
       Width           =   1992
       Begin VB.TextBox txtTotalTime 
          Alignment       =   2  'Center
          BackColor       =   &H80000016&
+         BeginProperty DataFormat 
+            Type            =   1
+            Format          =   "#,##0.00"
+            HaveTrueFalseNull=   0
+            FirstDayOfWeek  =   0
+            FirstWeekOfYear =   0
+            LCID            =   1033
+            SubFormatType   =   1
+         EndProperty
          Enabled         =   0   'False
          BeginProperty Font 
             Name            =   "MS Sans Serif"
@@ -483,7 +497,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   288
          Left            =   660
-         TabIndex        =   6
+         TabIndex        =   5
          Text            =   "txtTotalTime"
          ToolTipText     =   "Total time spent ""on-the-clock""..."
          Top             =   1380
@@ -491,6 +505,15 @@ Begin VB.Form frmMain
       End
       Begin VB.TextBox txtLessTime 
          Alignment       =   2  'Center
+         BeginProperty DataFormat 
+            Type            =   1
+            Format          =   "#,##0.00"
+            HaveTrueFalseNull=   0
+            FirstDayOfWeek  =   0
+            FirstWeekOfYear =   0
+            LCID            =   1033
+            SubFormatType   =   1
+         EndProperty
          BeginProperty Font 
             Name            =   "MS Sans Serif"
             Size            =   7.8
@@ -502,7 +525,7 @@ Begin VB.Form frmMain
          EndProperty
          Height          =   288
          Left            =   660
-         TabIndex        =   5
+         TabIndex        =   4
          Text            =   "txtLessTime"
          ToolTipText     =   "Time taken for lunch, breaks, etc."
          Top             =   1020
@@ -511,7 +534,7 @@ Begin VB.Form frmMain
       Begin MSComCtl2.DTPicker dtpStartTime 
          Height          =   288
          Left            =   660
-         TabIndex        =   3
+         TabIndex        =   2
          ToolTipText     =   "Time you ""Clocked-In""..."
          Top             =   300
          Width           =   1212
@@ -535,7 +558,7 @@ Begin VB.Form frmMain
       Begin MSComCtl2.DTPicker dtpEndTime 
          Height          =   288
          Left            =   660
-         TabIndex        =   4
+         TabIndex        =   3
          ToolTipText     =   "Time you ""Clocked-Out""..."
          Top             =   660
          Width           =   1212
@@ -572,7 +595,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00000080&
          Height          =   192
          Left            =   72
-         TabIndex        =   10
+         TabIndex        =   21
          Top             =   1440
          Width           =   492
       End
@@ -592,7 +615,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00000080&
          Height          =   192
          Left            =   108
-         TabIndex        =   9
+         TabIndex        =   20
          Top             =   1080
          Width           =   456
       End
@@ -612,7 +635,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00000080&
          Height          =   192
          Left            =   180
-         TabIndex        =   8
+         TabIndex        =   19
          Top             =   720
          Width           =   384
       End
@@ -632,7 +655,7 @@ Begin VB.Form frmMain
          ForeColor       =   &H00000080&
          Height          =   192
          Left            =   120
-         TabIndex        =   7
+         TabIndex        =   18
          Top             =   360
          Width           =   444
       End
@@ -673,10 +696,165 @@ Begin VB.Form frmMain
       Height          =   288
       Left            =   120
       TabIndex        =   0
+      TabStop         =   0   'False
       Text            =   "txtUserID"
       ToolTipText     =   "UserID..."
       Top             =   180
       Width           =   1872
+   End
+   Begin VB.Image imgHand 
+      Height          =   384
+      Index           =   9
+      Left            =   2880
+      Picture         =   "frmMain.frx":0442
+      Top             =   60
+      Visible         =   0   'False
+      Width           =   384
+   End
+   Begin VB.Image imgHand 
+      Height          =   384
+      Index           =   8
+      Left            =   2880
+      Picture         =   "frmMain.frx":0808
+      Top             =   60
+      Visible         =   0   'False
+      Width           =   384
+   End
+   Begin VB.Image imgHand 
+      Height          =   384
+      Index           =   7
+      Left            =   2880
+      Picture         =   "frmMain.frx":0BF1
+      Top             =   60
+      Visible         =   0   'False
+      Width           =   384
+   End
+   Begin VB.Image imgHand 
+      Height          =   384
+      Index           =   6
+      Left            =   2880
+      Picture         =   "frmMain.frx":0FD1
+      Top             =   60
+      Visible         =   0   'False
+      Width           =   384
+   End
+   Begin VB.Image imgHand 
+      Height          =   384
+      Index           =   5
+      Left            =   2880
+      Picture         =   "frmMain.frx":13A6
+      Top             =   60
+      Visible         =   0   'False
+      Width           =   384
+   End
+   Begin VB.Image imgHand 
+      Height          =   384
+      Index           =   4
+      Left            =   2880
+      Picture         =   "frmMain.frx":178B
+      Top             =   60
+      Visible         =   0   'False
+      Width           =   384
+   End
+   Begin VB.Image imgHand 
+      Height          =   384
+      Index           =   3
+      Left            =   2880
+      Picture         =   "frmMain.frx":1B6E
+      Top             =   60
+      Visible         =   0   'False
+      Width           =   384
+   End
+   Begin VB.Image imgHand 
+      Height          =   384
+      Index           =   2
+      Left            =   2880
+      Picture         =   "frmMain.frx":1F4D
+      Top             =   60
+      Visible         =   0   'False
+      Width           =   384
+   End
+   Begin VB.Image imgHand 
+      Height          =   384
+      Index           =   1
+      Left            =   2880
+      Picture         =   "frmMain.frx":2327
+      Top             =   60
+      Visible         =   0   'False
+      Width           =   384
+   End
+   Begin VB.Image imgStopWatch 
+      Height          =   384
+      Index           =   7
+      Left            =   2880
+      Picture         =   "frmMain.frx":26F5
+      Top             =   60
+      Width           =   384
+   End
+   Begin VB.Image imgStopWatch 
+      Height          =   384
+      Index           =   6
+      Left            =   2868
+      Picture         =   "frmMain.frx":2B08
+      Top             =   60
+      Width           =   384
+   End
+   Begin VB.Image imgStopWatch 
+      Height          =   384
+      Index           =   5
+      Left            =   2868
+      Picture         =   "frmMain.frx":2F16
+      Top             =   60
+      Width           =   384
+   End
+   Begin VB.Image imgStopWatch 
+      Height          =   384
+      Index           =   4
+      Left            =   2868
+      Picture         =   "frmMain.frx":3328
+      Top             =   60
+      Width           =   384
+   End
+   Begin VB.Image imgStopWatch 
+      Height          =   384
+      Index           =   3
+      Left            =   2868
+      Picture         =   "frmMain.frx":373C
+      Top             =   60
+      Width           =   384
+   End
+   Begin VB.Image imgStopWatch 
+      Height          =   384
+      Index           =   2
+      Left            =   2868
+      Picture         =   "frmMain.frx":3B4F
+      Top             =   60
+      Width           =   384
+   End
+   Begin VB.Image imgStopWatch 
+      Height          =   384
+      Index           =   1
+      Left            =   2868
+      Picture         =   "frmMain.frx":3F5D
+      Top             =   60
+      Width           =   384
+   End
+   Begin VB.Image imgHand 
+      Height          =   384
+      Index           =   0
+      Left            =   2880
+      Picture         =   "frmMain.frx":4371
+      Top             =   60
+      Visible         =   0   'False
+      Width           =   384
+   End
+   Begin VB.Image imgStopWatch 
+      Height          =   384
+      Index           =   0
+      Left            =   2868
+      Picture         =   "frmMain.frx":4735
+      Top             =   60
+      Width           =   384
    End
    Begin VB.Label lblA 
       AutoSize        =   -1  'True
@@ -691,9 +869,9 @@ Begin VB.Form frmMain
          Strikethrough   =   0   'False
       EndProperty
       Height          =   192
-      Left            =   2340
+      Left            =   4020
       TabIndex        =   30
-      Top             =   180
+      Top             =   420
       Visible         =   0   'False
       Width           =   336
    End
@@ -711,7 +889,7 @@ Begin VB.Form frmMain
       EndProperty
       Height          =   192
       Left            =   3960
-      TabIndex        =   11
+      TabIndex        =   22
       Top             =   168
       Width           =   456
    End
@@ -733,58 +911,188 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 Dim adoConn As ADODB.Connection
-Dim vrsGrid As ADODB.Recordset
-Dim rsDepartments As ADODB.Recordset
-Dim rsProducts As ADODB.Recordset
-Dim rsProjects As ADODB.Recordset
-Dim rsFunctions As ADODB.Recordset
-Dim rsSummary As ADODB.Recordset
-Dim minWidth As Single
-Dim minHeight As Single
-Dim minGridWidth As Single
-Dim minGridHeight As Single
-Dim minFrameWidth As Single
+Dim dtCurrent As Date
+Dim fPendingUpdate As Boolean
 Dim minDataComboWidth As Single
 Dim minDateWidth As Single
-Private SortDESC() As Boolean
-Private MouseX As Single
-Private MouseY As Single
-Dim fAdding As Boolean
+Dim minFrameWidth As Single
+Dim minGridHeight As Single
+Dim minGridWidth As Single
+Dim minHeight As Single
+Dim minWidth As Single
+Dim MouseX As Single
+Dim MouseY As Single
+Dim rsDepartments As ADODB.Recordset
+Dim rsFunctions As ADODB.Recordset
+Dim rsProducts As ADODB.Recordset
+Dim rsProjects As ADODB.Recordset
+Dim rsSummary As ADODB.Recordset
+Dim SortDESC() As Boolean
+Dim vrsGrid As ADODB.Recordset
 Private Sub cmdCancel_Click()
     On Error Resume Next
     
     If vrsGrid.EditMode = adEditInProgress Then vrsGrid.CancelUpdate
     If vrsGrid.EditMode = adEditAdd Then vrsGrid.CancelUpdate
-    'If fAdding Then vrsGrid.Delete
     ResetGrid
     EnableFields False
-    fAdding = False
+    dtpDate.Enabled = True
+    StopHand
+    StartStopWatch
 End Sub
 Private Sub cmdDelete_Click()
     If vrsGrid.EditMode = adEditInProgress Then vrsGrid.CancelUpdate
     vrsGrid.Delete
+    ResetGrid
     EnableFields False
+    dtpDate.Enabled = True
+    StopHand
+    StartStopWatch
 End Sub
 Private Sub cmdEdit_Click()
-    fAdding = False
     EnableFields True
     cmdDelete.Enabled = True
+    dtpDate.Enabled = False
+    StopStopWatch
+    StartHand
 End Sub
 Private Sub cmdNew_Click()
     'Will do an vrsGrid.AddNew...
-    fAdding = True
     vrsGrid.AddNew
     EnableFields True
     cmdDelete.Enabled = False
+    dtpDate.Enabled = False
+    StopStopWatch
+    StartHand
 End Sub
 Private Sub cmdUpdate_Click()
     'Will do an vrsGrid.Update...
+    vrsGrid("EmployeeID") = txtUserID.Text
+    vrsGrid("DateRec") = Format(dtCurrent, "Short Date")
+    vrsGrid("DepartmentID") = dbcDepartment.BoundText
+    vrsGrid("ProductID") = dbcProduct.BoundText
+    vrsGrid("ProjectID") = dbcProject.BoundText
+    vrsGrid("FunctionID") = dbcFunction.BoundText
     vrsGrid.Update
     EnableFields False
-    fAdding = False
+    ResizeGrid
+    dtpDate.Enabled = True
+    StopHand
+    StartStopWatch
+    fPendingUpdate = True
+End Sub
+Private Sub dbcDepartment_GotFocus()
+    TextSelected
+End Sub
+Private Sub dbcDepartment_Validate(Cancel As Boolean)
+    Dim adoRS As ADODB.Recordset
+    Dim RecordsAffected As Long
+    
+    If Not IsNull(dbcDepartment.SelectedItem) Then Exit Sub
+    Set adoRS = New ADODB.Recordset
+    adoRS.Open "select DepartmentID from Departments where DepartmentID like '" & dbcDepartment.Text & "%'", adoConn, adOpenKeyset, adLockReadOnly
+    If Not adoRS.EOF Then
+        dbcDepartment.BoundText = adoRS("DepartmentID")
+    Else
+        If MsgBox(dbcDepartment.Text & " does not yet exist in the database. Do you want to add this new department?", vbYesNo) = vbYes Then
+            adoConn.BeginTrans
+            adoConn.Execute "insert into Departments (DepartmentID) values ('" & dbcDepartment.Text & "')", RecordsAffected
+            adoConn.CommitTrans
+            rsDepartments.Requery
+        End If
+    End If
+    CloseRecordset adoRS, True
+End Sub
+Private Sub dbcFunction_GotFocus()
+    TextSelected
+End Sub
+Private Sub dbcFunction_Validate(Cancel As Boolean)
+    Dim adoRS As ADODB.Recordset
+    Dim RecordsAffected As Long
+    
+    If Not IsNull(dbcFunction.SelectedItem) Then Exit Sub
+    Set adoRS = New ADODB.Recordset
+    adoRS.Open "select FunctionID from Functions where FunctionID like '" & dbcFunction.Text & "%'", adoConn, adOpenKeyset, adLockReadOnly
+    If Not adoRS.EOF Then
+        dbcFunction.BoundText = adoRS("FunctionID")
+    Else
+        If MsgBox(dbcFunction.Text & " does not yet exist in the database. Do you want to add this new Function?", vbYesNo) = vbYes Then
+            adoConn.BeginTrans
+            adoConn.Execute "insert into Functions (FunctionID) values ('" & dbcFunction.Text & "')", RecordsAffected
+            adoConn.CommitTrans
+            rsFunctions.Requery
+        End If
+    End If
+    CloseRecordset adoRS, True
 End Sub
 Private Sub dbcProduct_Change()
     ResetProjectList
+End Sub
+Private Sub dbcProduct_GotFocus()
+    TextSelected
+End Sub
+Private Sub dbcProduct_Validate(Cancel As Boolean)
+    Dim adoRS As ADODB.Recordset
+    Dim RecordsAffected As Long
+    
+    If Not IsNull(dbcProduct.SelectedItem) Then Exit Sub
+    Set adoRS = New ADODB.Recordset
+    adoRS.Open "select ProductID from [Products & Projects] where ProductID like '" & dbcProduct.Text & "%'", adoConn, adOpenKeyset, adLockReadOnly
+    If Not adoRS.EOF Then
+        dbcProduct.BoundText = adoRS("ProductID")
+    Else
+        If MsgBox(dbcProduct.Text & " does not yet exist in the database. Do you want to add this new Product?", vbYesNo) = vbYes Then
+            adoConn.BeginTrans
+            adoConn.Execute "insert into [Products & Projects] ([ProductID],[ProjectID],[ClientID],[CustomID],[YearRec],[R & D],[InActive],[Regulatory],[SGCustID],[SGFuncID],[SGOptID]) values " & _
+                "('" & dbcProduct.Text & "', " & _
+                "'General Support', " & _
+                "Null, " & _
+                "0, " & _
+                "Null, " & _
+                "0, " & _
+                "0, " & _
+                "0, " & _
+                "Null, " & _
+                "Null, " & _
+                "Null)", RecordsAffected
+            adoConn.CommitTrans
+            rsProducts.Requery
+        End If
+    End If
+    CloseRecordset adoRS, True
+End Sub
+Private Sub dbcProject_GotFocus()
+    TextSelected
+End Sub
+Private Sub dbcProject_Validate(Cancel As Boolean)
+    Dim adoRS As ADODB.Recordset
+    Dim RecordsAffected As Long
+    
+    If Not IsNull(dbcProject.SelectedItem) Then Exit Sub
+    Set adoRS = New ADODB.Recordset
+    adoRS.Open "select ProjectID from [Products & Projects] where ProductID='" & dbcProduct.BoundText & "' And ProjectID like '" & dbcProject.Text & "%'", adoConn, adOpenKeyset, adLockReadOnly
+    If Not adoRS.EOF Then
+        dbcProject.BoundText = adoRS("ProjectID")
+    Else
+        If MsgBox(dbcProject.Text & " does not yet exist in the database. Do you want to add this new Project?", vbYesNo) = vbYes Then
+            adoConn.BeginTrans
+            adoConn.Execute "insert into [Products & Projects] ([ProductID],[ProjectID],[ClientID],[CustomID],[YearRec],[R & D],[InActive],[Regulatory],[SGCustID],[SGFuncID],[SGOptID]) values " & _
+                "('" & dbcProduct.Text & "', " & _
+                "'" & dbcProject.Text & "', " & _
+                "Null, " & _
+                "0, " & _
+                "Null, " & _
+                "0, " & _
+                "0, " & _
+                "0, " & _
+                "Null, " & _
+                "Null, " & _
+                "Null)", RecordsAffected
+            adoConn.CommitTrans
+            rsProducts.Requery
+        End If
+    End If
+    CloseRecordset adoRS, True
 End Sub
 Private Sub dgdGrid_DblClick()
     Dim col As Column
@@ -834,14 +1142,6 @@ Private Sub dgdGrid_HeadClick(ByVal ColIndex As Integer)
     
     SortDESC(ColIndex) = Not SortDESC(ColIndex)
 End Sub
-'Private Sub dgdGrid_KeyPress(KeyAscii As Integer)
-'    Select Case KeyAscii
-'        Case vbKeyReturn
-'            cmdOK_Click
-'        Case vbKeyEscape
-'            cmdCancel_Click
-'    End Select
-'End Sub
 Private Sub dgdGrid_MouseMove(Button As Integer, Shift As Integer, X As Single, Y As Single)
     MouseX = X
     MouseY = Y
@@ -856,6 +1156,9 @@ Private Sub dgdGrid_RowColChange(LastRow As Variant, ByVal LastCol As Integer)
     If dgdGrid.Columns.Count > 2 Then dgdGrid.col = dgdGrid.Columns("EmployeeID").ColIndex
 End Sub
 Private Sub dtpDate_Change()
+    'Make sure this uses the not-yet-changed dtCurrent...
+    If fPendingUpdate Then UpdateDatabase
+    dtCurrent = dtpDate.Value
     ResetGrid
 End Sub
 Private Sub EnableFields(fEnabled As Boolean)
@@ -920,9 +1223,12 @@ Private Sub Form_Load()
     minDataComboWidth = dbcDepartment.Width
     minDateWidth = dtpDate.Width
     
+    StartStopWatch
+    StopHand
+    
     txtUserID.Text = "KCLARK"
     Set adoConn = New ADODB.Connection
-    adoConn.Open "FileDSN=TimeKeeper2Local.dsn", "Admin", ""
+    EstablishConnection adoConn, "TimeKeeper2Local.dsn"
     
     Set rsDepartments = New ADODB.Recordset
     rsDepartments.Open "Select * from [Departments] order by DepartmentID Asc", adoConn, adOpenKeyset, adLockReadOnly
@@ -948,7 +1254,9 @@ Private Sub Form_Load()
     dbcFunction.ListField = "FunctionID"
     Set dbcFunction.RowSource = rsFunctions
     
-    dtpDate.Value = Now
+    fPendingUpdate = False
+    dtCurrent = Now
+    dtpDate.Value = dtCurrent
     dtpDate_Change
 End Sub
 Private Sub Form_Resize()
@@ -962,7 +1270,8 @@ Private Sub Form_Resize()
     'Resize the Grid...
     dgdGrid.Height = minGridHeight + yAdjust
     dgdGrid.Width = minGridWidth + xAdjust
-
+    ResizeGrid
+    
     'Resize the Data Entry Frame...
     fraEntry.Width = minFrameWidth + xAdjust
     dbcDepartment.Width = minDataComboWidth + xAdjust
@@ -976,24 +1285,45 @@ Private Sub Form_Resize()
     dtpDate.Width = minDateWidth + xAdjust
 End Sub
 Private Sub Form_Unload(Cancel As Integer)
+    If fPendingUpdate Then UpdateDatabase
+    
+    Set dgdGrid.DataSource = Nothing
+    Set dbcDepartment.DataSource = Nothing
+    Set dbcProduct.DataSource = Nothing
+    Set dbcProject.DataSource = Nothing
+    Set dbcFunction.DataSource = Nothing
+    Set txtHours.DataSource = Nothing
     CloseRecordset vrsGrid, True
+    
+    Set dbcDepartment.RowSource = Nothing
     CloseRecordset rsDepartments, True
+    
+    Set dbcProduct.RowSource = Nothing
     CloseRecordset rsProducts, True
+    
+    Set dbcProject.RowSource = Nothing
     CloseRecordset rsProjects, True
+    
+    Set dbcFunction.RowSource = Nothing
     CloseRecordset rsFunctions, True
+    
+    Set dtpStartTime.DataSource = Nothing
+    Set dtpEndTime.DataSource = Nothing
+    Set txtLessTime.DataSource = Nothing
+    Set txtTotalTime.DataSource = Nothing
+    CloseRecordset rsSummary, True
+    
     CloseConnection adoConn, True
 End Sub
 Private Sub mnuFileExit_Click()
     Unload Me
 End Sub
 Public Sub ResetGrid()
-    Dim rsTemp As ADODB.Recordset
-    Dim col As Column
-    Dim ScaleWidth As Single
-    Dim TotalColumnWidths As Single
+    Dim sqlSource As String
+    Dim RecordsAffected As Long
     
     Me.MousePointer = vbHourglass
-    dgdGrid.Caption = "Time Sheet Entries for " & Format(dtpDate.Value, "Long Date")
+    dgdGrid.Caption = "TimeKeeper Entries for " & Format(dtCurrent, "Long Date")
     Set dbcDepartment.DataSource = Nothing
     Set dbcProduct.DataSource = Nothing
     Set dbcProject.DataSource = Nothing
@@ -1004,8 +1334,8 @@ Public Sub ResetGrid()
     
     Set vrsGrid = New ADODB.Recordset
     'vrsGrid.Open "select EHD.* from [Employee Hours/Day] EHD where EHD.EmployeeID = 'KCLARK' order by EHD.DateRec Desc"
-    If Not MakeVirtualRecordset(adoConn, "select EHD.* from [Employee Hours/Day] EHD where EHD.EmployeeID = '" & txtUserID & "' and EHD.DateRec=#" & Format(dtpDate.Value, "Short Date") & "#", vrsGrid) Then
-        MsgBox "Problem retrieving data for " & txtUserID.Text & " on " & Format(dtpDate.Value, "Short Date"), vbCritical, Me.Caption
+    If Not MakeVirtualRecordset(adoConn, "select EHD.* from [Employee Hours/Day] EHD where EHD.EmployeeID = '" & txtUserID & "' and EHD.DateRec=#" & Format(dtCurrent, "Short Date") & "#", vrsGrid) Then
+        MsgBox "Problem retrieving data for " & txtUserID.Text & " on " & Format(dtCurrent, "Short Date"), vbCritical, Me.Caption
         End
     End If
     Set dgdGrid.DataSource = vrsGrid
@@ -1023,20 +1353,8 @@ Public Sub ResetGrid()
     dgdGrid.ScrollBars = dbgAutomatic
     dgdGrid.Enabled = True
     dgdGrid.BackColor = vb3DLight
-    ScaleWidth = dgdGrid.Width - dgdGrid.Columns("Department").Left - (dgdGrid.Columns.Count * 2)   'This to cover the column delimiter gridlines (I made it up)...
     
-    Set rsTemp = vrsGrid.Clone(adLockReadOnly)
-    For Each col In dgdGrid.Columns
-        If col.Visible Then
-            ResizeColumn dgdGrid, rsTemp, col
-            TotalColumnWidths = TotalColumnWidths + col.Width
-        End If
-    Next col
-    CloseRecordset rsTemp, True
-    
-    If TotalColumnWidths < ScaleWidth Then _
-        dgdGrid.Columns("Project").Width = dgdGrid.Columns("Project").Width + (ScaleWidth - TotalColumnWidths)
-    
+    ResizeGrid
     UpdateHoursEntered
     
     Set dbcDepartment.DataSource = vrsGrid
@@ -1053,7 +1371,16 @@ Public Sub ResetGrid()
     Set txtTotalTime.DataSource = Nothing
     CloseRecordset rsSummary, True
     Set rsSummary = New ADODB.Recordset
-    rsSummary.Open "select * from [Employee Summary] ES where ES.EmployeeID = '" & txtUserID & "' and ES.DateRec=#" & Format(dtpDate.Value, "Short Date") & "#", adoConn, adOpenKeyset, adLockOptimistic
+    rsSummary.Open "select * from [Employee Summary] ES where ES.EmployeeID = '" & txtUserID & "' and ES.DateRec=#" & Format(dtCurrent, "Short Date") & "#", adoConn, adOpenKeyset, adLockOptimistic
+    If rsSummary.EOF Then
+        'Add one...
+        adoConn.BeginTrans
+        sqlSource = "insert into [Employee Summary] ([EmployeeID],[DateRec],[Start Time],[End Time],[Less Time],[Computed Time],[Total Time],[Comments]) values " & _
+            "('" & txtUserID.Text & "', " & "#" & Format(dtCurrent, "Short Date") & "#, " & "'09:00 AM', " & "'05:00 PM', " & "'0.00', " & "'0.00', " & "'0.00', " & "' ')"
+        adoConn.Execute sqlSource, RecordsAffected
+        adoConn.CommitTrans
+        rsSummary.Requery
+    End If
     dtpStartTime.DataField = "Start Time"
     Set dtpStartTime.DataSource = rsSummary
     dtpEndTime.DataField = "End Time"
@@ -1066,19 +1393,24 @@ Public Sub ResetGrid()
     If vrsGrid.EOF Then
         dtpStartTime.Value = "09:00 AM"
         dtpEndTime.Value = "05:00 PM"
-        txtLessTime.Text = "0"
+        txtLessTime.Text = "0.00"
         txtTotalTime.Text = TimeDiff(dtpStartTime.Value, dtpEndTime.Value)
     End If
     EnableFields False
     Me.MousePointer = vbDefault
 End Sub
 Public Sub ResetProjectList()
+    Set dbcProject.DataSource = Nothing
     Set dbcProject.RowSource = Nothing
     CloseRecordset rsProjects, False
     
     rsProjects.Open "Select distinct ProductID, ProjectID from [Products & Projects] Projects where ProductID='" & dbcProduct.BoundText & "' order by ProjectID Asc", adoConn, adOpenKeyset, adLockReadOnly
-    Set dbcProject.RowSource = rsProjects
-    'Set dbcProject.DataSource = vrsGrid
+    If Not rsProjects.EOF Then
+        Set dbcProject.RowSource = rsProjects
+    Else
+        dbcProject.Text = vbNullString
+    End If
+    Set dbcProject.DataSource = vrsGrid
 End Sub
 Private Sub ResizeColumn(ctlGrid As Control, rs As ADODB.Recordset, col As Column)
     Dim ColumnFormat As New StdDataFormat
@@ -1108,24 +1440,210 @@ Private Sub ResizeColumn(ctlGrid As Control, rs As ADODB.Recordset, col As Colum
     col.Width = WidestData + (4 * ResizeWindow)
     If col.Width > ctlGrid.Width Then col.Width = col.Width - ResizeWindow
 End Sub
+Private Sub ResizeGrid()
+    Dim rsTemp As ADODB.Recordset
+    Dim col As Column
+    Dim ScaleWidth As Single
+    Dim TotalColumnWidths As Single
+    
+    ScaleWidth = dgdGrid.Width - dgdGrid.Columns("Department").Left - (dgdGrid.Columns.Count * 2)   'This to cover the column delimiter gridlines (I made it up)...
+    Set rsTemp = vrsGrid.Clone(adLockReadOnly)
+    For Each col In dgdGrid.Columns
+        If col.Visible Then
+            ResizeColumn dgdGrid, rsTemp, col
+            TotalColumnWidths = TotalColumnWidths + col.Width
+        End If
+    Next col
+    CloseRecordset rsTemp, True
+    
+    If TotalColumnWidths < ScaleWidth Then
+        dgdGrid.Columns("Project").Width = dgdGrid.Columns("Project").Width + (ScaleWidth - TotalColumnWidths)
+    End If
+End Sub
+Private Sub StartHand()
+    Dim i As Integer
+    timHand.Interval = 1000
+    timHand.Enabled = True
+End Sub
+Private Sub StartStopWatch()
+    Dim i As Integer
+    Dim dInterval As Double
+    dInterval = 60000#
+    dInterval = dInterval / 8
+    timStopWatch.Interval = CInt(dInterval)
+    timStopWatch.Enabled = True
+    For i = 0 To 7
+        imgStopWatch(i).Visible = True
+    Next i
+End Sub
+Private Sub StopHand()
+    Dim i As Integer
+    timHand.Enabled = False
+    For i = 0 To 9
+        imgHand(i).Visible = False
+    Next i
+End Sub
+Private Sub StopStopWatch()
+    Dim i As Integer
+    'timStopWatch.Enabled = False
+    For i = 0 To 7
+        imgStopWatch(i).Visible = False
+    Next i
+End Sub
 Private Function TimeDiff(StartDate As Date, EndDate As Date) As String
+    Const HHMM As Boolean = False
     Dim Minutes As Long
     Dim Hours As Long
     
-    Minutes = DateDiff("n", StartDate, EndDate)
-    If Minutes < 0 Then Minutes = Minutes + (24 * 60) 'Assume it wrapped past midnight into the next day...
-    Hours = CLng(Minutes \ 60)
-    Minutes = CLng(Minutes Mod 60)
-    TimeDiff = Format(Hours, "00") & ":" & Format(Minutes, "00")
+    If HHMM Then
+        Minutes = DateDiff("n", StartDate, EndDate)
+        If Minutes < 0 Then Minutes = Minutes + (24 * 60) 'Assume it wrapped past midnight into the next day...
+        Hours = CLng(Minutes \ 60)
+        Minutes = CLng(Minutes Mod 60)
+        TimeDiff = Format(Hours, "00") & ":" & Format(Minutes, "00")
+    Else
+        Minutes = DateDiff("n", StartDate, EndDate)
+        TimeDiff = Format(Minutes / 60, "0.00")
+    End If
 End Function
+Private Sub timHand_Timer()
+    Static LastImage As Integer
+    Dim i As Integer
+    For i = 0 To 9
+        imgHand(i).Visible = False
+    Next i
+    LastImage = LastImage Mod 10
+    imgHand(LastImage).ZOrder 0
+    imgHand(LastImage).Visible = True
+    LastImage = LastImage + 1
+End Sub
+Private Sub timStopWatch_Timer()
+    Static LastImage As Integer
+    LastImage = LastImage Mod 8
+    imgStopWatch(LastImage).ZOrder 0
+    LastImage = LastImage + 1
+End Sub
+Private Sub txtHours_GotFocus()
+    TextSelected
+End Sub
+Private Sub txtHours_KeyPress(KeyAscii As Integer)
+    KeyPressReal KeyAscii
+End Sub
+Private Sub txtHours_Validate(Cancel As Boolean)
+    Dim TotalHours As String
+    
+    If Trim(txtHours.Text) = vbNullString Then
+        MsgBox "Hours must be specified.", vbExclamation, Me.Caption
+        Cancel = True
+        Exit Sub
+    End If
+    
+    If Val(txtHours.Text) > Val(txtTotalTime.Text) Then
+        MsgBox txtHours.Text & " Hours exceeds the specified Total Hours Worked (" & txtTotalTime.Text & ").", vbInformation, Me.Caption
+        Cancel = False
+        Exit Sub
+    End If
+    
+    'Make sure Grid is updated before calling UpdateHoursEntered...
+    vrsGrid("HoursRec") = txtHours.Text
+    UpdateHoursEntered
+    If sbStatus.Panels("Status").Text <> vbNullString Then
+        TotalHours = Mid(sbStatus.Panels("Status").Text, Len("Hours: ") + 1)
+        If Val(TotalHours) > Val(txtTotalTime.Text) Then
+            MsgBox TotalHours & " Hours exceeds the specified Total Hours Worked (" & txtTotalTime.Text & ").", vbInformation, Me.Caption
+            Cancel = False
+            Exit Sub
+        End If
+    End If
+End Sub
+Private Sub txtLessTime_GotFocus()
+    TextSelected
+End Sub
+Private Sub txtLessTime_KeyPress(KeyAscii As Integer)
+    KeyPressReal KeyAscii
+End Sub
+Private Sub txtLessTime_Validate(Cancel As Boolean)
+    If Trim(txtLessTime.Text) = vbNullString Then
+        MsgBox "Hours must be specified.", vbExclamation, Me.Caption
+        Cancel = True
+        Exit Sub
+    End If
+End Sub
+Private Sub UpdateDatabase()
+    Dim adoRS As ADODB.Recordset
+    Dim sqlSource As String
+    Dim RecordsAffected As Long
+    
+    'This routines takes the stuff in the Virtual Recordset, vrsGrid and
+    'physically writes it into the database...
+    
+    On Error GoTo ErrorHandler
+    adoConn.BeginTrans
+    
+    'First replace the Employee Summary record...
+    sqlSource = "delete from [Employee Summary] ES where EmployeeID='" & txtUserID.Text & "' And DateRec=#" & Format(dtCurrent, "Short Date") & "#"
+    adoConn.Execute sqlSource, RecordsAffected
+    sqlSource = "insert into [Employee Summary] ([EmployeeID],[DateRec],[Start Time],[End Time],[Less Time],[Computed Time],[Total Time],[Comments]) values " & _
+        "('" & txtUserID.Text & "', " & _
+        "#" & Format(dtCurrent, "Short Date") & "#, " & _
+        "'" & dtpStartTime.Value & "', " & _
+        "'" & dtpEndTime.Value & "', " & _
+        "'" & txtLessTime.Text & "', " & _
+        "'" & Mid(sbStatus.Panels("Status").Text, Len("Hours: ") + 1) & "', " & _
+        "'" & txtTotalTime.Text & "', " & _
+        "' ')"
+    adoConn.Execute sqlSource, RecordsAffected
+    
+    'OK, now do the detail...
+    sqlSource = "delete from [Employee Hours/Day] EHD where EmployeeID='" & txtUserID.Text & "' And DateRec=#" & Format(dtCurrent, "Short Date") & "#"
+    adoConn.Execute sqlSource, RecordsAffected
+    If vrsGrid.RecordCount > 0 Then
+        vrsGrid.MoveFirst
+        While Not vrsGrid.EOF
+            sqlSource = "insert into [Employee Hours/Day] ([EmployeeID],[DateRec],[DepartmentID],[ProductID],[ProjectID],[FunctionID],[HoursRec]) values " & _
+                "('" & txtUserID.Text & "', " & _
+                "#" & Format(dtCurrent, "Short Date") & "#, " & _
+                "'" & vrsGrid("DepartmentID") & "', " & _
+                "'" & vrsGrid("ProductID") & "', " & _
+                "'" & vrsGrid("ProjectID") & "', " & _
+                "'" & vrsGrid("FunctionID") & "', " & _
+                "'" & vrsGrid("HoursRec") & "')"
+            adoConn.Execute sqlSource, RecordsAffected
+            vrsGrid.MoveNext
+        Wend
+    End If
+    adoConn.CommitTrans
+    
+ExitSub:
+    fPendingUpdate = False
+    Exit Sub
+    
+ErrorHandler:
+    Dim ErrCode As Long
+    Dim ErrString As String
+    
+    ErrString = BuildADOerror(adoConn, ErrCode)
+    adoConn.RollbackTrans
+    MsgBox ErrString, vbExclamation, Me.Caption
+    GoTo ExitSub
+    Resume Next 'for debug purposes only...
+End Sub
 Private Sub UpdateHoursEntered()
     Dim adoRS As ADODB.Recordset
-    Dim Hours As String
+    Dim Hours As Double
     
-    Hours = "0.00"
-    Set adoRS = New ADODB.Recordset
-    adoRS.Open "select sum(EHD.HoursRec) from  [Employee Hours/Day] EHD where EHD.EmployeeID = '" & txtUserID & "' and EHD.DateRec=#" & Format(dtpDate.Value, "Short Date") & "#", adoConn, adOpenKeyset, adLockReadOnly
-    If Not adoRS.EOF And Not IsNull(adoRS(0).Value) Then Hours = Format(adoRS(0).Value, "0.00")
-    CloseRecordset adoRS, True
-    sbStatus.Panels("Status").Text = "Hours: " & Hours
+    Hours = 0#
+    If vrsGrid.RecordCount > 0 Then
+        Set adoRS = vrsGrid.Clone(adLockReadOnly) 'So user doesn't see us scolling through the recordset in the grid...
+        If adoRS.RecordCount > 0 Then
+            adoRS.MoveFirst
+            While Not adoRS.EOF
+                Hours = Hours + adoRS("HoursRec")
+                adoRS.MoveNext
+            Wend
+        End If
+        CloseRecordset adoRS, True
+    End If
+    sbStatus.Panels("Status").Text = "Hours: " & Format(Hours, "0.00")
 End Sub
+
