@@ -852,6 +852,24 @@ Public Sub CloseRecordset(ByRef adoRS As ADODB.Recordset, Destroy As Boolean)
         If Destroy Then Set adoRS = Nothing
     End If
 End Sub
+Public Sub EstablishConnection(cn As ADODB.Connection, strFileDSN As String)
+    If Not cn Is Nothing Then
+        If (cn.State And adStateOpen) = adStateOpen Then cn.Close
+        Set cn = Nothing
+    End If
+    Set cn = New ADODB.Connection
+    
+    cn.CommandTimeout = 60
+    cn.ConnectionTimeout = 60
+    'cn.mode = adModeShareDenyNone
+    cn.Mode = adModeReadWrite              'ADO Default: adModeUnknown
+    'cn.IsolationLevel = adXactIsolated     'ADO Default: adXactCursorStability
+    'cn.IsolationLevel = adXactCursorStability
+    'cn.CursorLocation = adUseServer        'ADO Default...
+    cn.CursorLocation = adUseClient
+    'cn.Open "Provider=Microsoft.Jet.OLEDB.4.0;Persist Security Info=False;Data Source=F:\Program Files\Home Inventory\Database\Ken's Stuff.mdb;;"
+    cn.Open "FileDSN=" & strFileDSN
+End Sub
 Public Function MakeVirtualRecordset(ByRef adoConn As ADODB.Connection, sqlSource As String, ByRef vRS As ADODB.Recordset, Optional ByVal MaxRecords As Long = 0) As Boolean
     Dim adoRS As New ADODB.Recordset
     Dim fld As ADODB.Field
