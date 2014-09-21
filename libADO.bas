@@ -921,7 +921,8 @@ ErrorHandler:
     Dim errorCode As Long
     MakeVirtualRecordset = False
     MsgBox BuildADOerror(adoConn, errorCode), vbCritical, "MakeVirtualRecordset"
-    Call SNBH(frmMain.Tag, "MakeVirtualRecordset", sqlSource)
+    End
+    'Call SNBH(frmMain.Tag, "MakeVirtualRecordset", sqlSource)
     'Resume Next
 End Function
 
