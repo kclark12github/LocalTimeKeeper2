@@ -91,7 +91,7 @@ Begin VB.Form frmMain
             AutoSize        =   2
             Object.Width           =   1270
             MinWidth        =   1270
-            TextSave        =   "11:54 PM"
+            TextSave        =   "3:33 PM"
             Key             =   "Time"
          EndProperty
       EndProperty
@@ -551,7 +551,7 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "hh:mm tt"
-         Format          =   24510467
+         Format          =   24444931
          UpDown          =   -1  'True
          CurrentDate     =   36490
       End
@@ -575,7 +575,7 @@ Begin VB.Form frmMain
             Strikethrough   =   0   'False
          EndProperty
          CustomFormat    =   "hh:mm tt"
-         Format          =   24510467
+         Format          =   24444931
          UpDown          =   -1  'True
          CurrentDate     =   36490
       End
@@ -678,7 +678,7 @@ Begin VB.Form frmMain
          Italic          =   0   'False
          Strikethrough   =   0   'False
       EndProperty
-      Format          =   24510464
+      Format          =   24444928
       CurrentDate     =   36490
    End
    Begin VB.TextBox txtUserID 
